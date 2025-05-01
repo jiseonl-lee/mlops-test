@@ -32,4 +32,4 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: leanna-flask-ml-app   # ← App Service 이름
-        package: ./flask-app # ← 배포할 패키지 경로
+        package: ./flask-app # ← 배포할 패키지 경로 (main아닌 경우 확인)
