@@ -1,0 +1,29 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  azureSubscription: 'flask-ml-conn'  # 너가 만든 Service Connection 이름
+  appName: 'leanna-flask-ml-app'           # 너가 만든 Azure App Service 이름
+  packageDirectory: '.'              # 배포할 파일 위치 (루트)
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.10'
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: 'Install dependencies'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: '$(azureSubscription)'
+    appName: '$(appName)'
+    package: '$(packageDirectory)'
+  displayName: 'Deploy to Azure App Service'
